@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script&family=Montserrat:wght@200;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script&family=Heebo&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+.navbar-blur {
+  @apply bg-white bg-opacity-60;
+  backdrop-filter: blur(3px);
+}
+
+.hunburger {
+  @apply w-[30px] duration-150 h-[2px] my-2 bg-black block;
+}
+
+.hunburger-active > span:nth-child(1) {
+  @apply rotate-45;
+}
+.hunburger-active > span:nth-child(2) {
+  @apply scale-0;
+}
+.hunburger-active > span:nth-child(3) {
+  @apply -rotate-45;
+}
