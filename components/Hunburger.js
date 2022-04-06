@@ -2,7 +2,7 @@ export default function Hunburger() {
   const hunburgerToggel = () => {
     const hunburger = document.querySelector("#hunburger");
     const naviToggle = document.querySelector("nav");
-    naviToggle.classList.toggle("scale-100");
+    naviToggle.classList.toggle("scale-0");
     hunburger.classList.toggle("hunburger-active");
   };
 
