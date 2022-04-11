@@ -4,6 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+  @apply font-heebo
+}
 html {
   scroll-behavior: smooth;
 }

@@ -7,6 +7,7 @@ export default function Navigasi() {
         <Ancor href="#home" text="HOME" />
         <Ancor href="#about" text="ABOUT" />
         <Ancor href="#project" text="PROJECT" />
+        <Ancor href="#skils" text="SKILS" />
         <Ancor href="#contact" text="CONTACT" />
       </ul>
     </nav>
