@@ -1,15 +1,96 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps } from "firebase/app";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { getDatabase, ref, push, set } from "firebase/database";
+import config from "../env_local.json";
+
+const {
+  APIKEY,
+  AUTHDOMAIN,
+  PROJECTID,
+  STORAGEBUCKET,
+  MSGSENDRID,
+  APPID,
+  DATABASEURL,
+} = config;
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCUhahnBGdcjk7DDXUUIMztiAalRR55-EI",
-  authDomain: "portofolio-63f1b.firebaseapp.com",
-  projectId: "portofolio-63f1b",
-  storageBucket: "portofolio-63f1b.appspot.com",
-  messagingSenderId: "751657771962",
-  appId: "1:751657771962:web:a6abd281306456b87d3383",
-  measurementId: "G-PM0T75438Q",
+  apiKey: APIKEY,
+  authDomain: AUTHDOMAIN,
+  projectId: PROJECTID,
+  storageBucket: STORAGEBUCKET,
+  messagingSenderId: MSGSENDRID,
+  appId: APPID,
+  databaseURL: DATABASEURL,
 };
 
-const firebase = initializeApp(firebaseConfig);
+if (!getApps().length) {
+  initializeApp(firebaseConfig);
+}
 
-export default firebase;
+export const firebaseAuth = getAuth();
+export const database = getDatabase();
+
+export const db = () => {
+  return database;
+};
+
+// Database (membuat project data)
+export const createProject = async (title, descripsi, date, category) => {
+  const resolve = await push(ref(database, `projects/`), {
+    title,
+    date,
+    descripsi,
+    category,
+  });
+  return resolve;
+};
+
+// update project
+export const updateProjectApi = async (
+  title,
+  date,
+  descripsi,
+  projectId,
+  category
+) => {
+  const resolve = await set(ref(database, `projects/${projectId}`), {
+    title,
+    date,
+    descripsi,
+    category,
+  });
+  return resolve;
+};
+
+// Authentication
+export const authtentication = () => {
+  return firebaseAuth;
+};
+
+export const singUp = async (email, password) => {
+  const resolve = await createUserWithEmailAndPassword(
+    firebaseAuth,
+    email,
+    password
+  );
+  return resolve;
+};
+
+export const singIn = async (email, password) => {
+  const resolve = await signInWithEmailAndPassword(
+    firebaseAuth,
+    email,
+    password
+  );
+  return resolve;
+};
+
+export const singOut = async () => {
+  const resolve = await signOut(firebaseAuth);
+  return resolve;
+};

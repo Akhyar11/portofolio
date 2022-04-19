@@ -10,9 +10,12 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.1.0",
+    "axios": "^0.26.1",
     "dotenv": "^16.0.0",
     "firebase": "^9.6.10",
+    "firebase-admin": "^10.0.2",
     "firebaseui": "^6.0.1",
+    "fs": "^0.0.1-security",
     "mongodb": "^4.5.0",
     "next": "12.1.0",
     "react": "17.0.2",
