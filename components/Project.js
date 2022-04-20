@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 
 export default function Project() {
   const [data, setData] = useState(null);
-  useEffect(async () => {
+  const getData = async () => {
     const resolve = await axios.get("http://localhost:5000/api/project");
     setData(resolve.data);
-  }, []);
+  };
+  useEffect(() => getData(), []);
 
   return (
     <div
@@ -19,6 +20,7 @@ export default function Project() {
       {data
         ? data.map((i) => (
             <Card
+              key={i.id}
               title={i.data.title}
               date={new Date(i.data.date).toLocaleDateString()}
               category={i.data.category}

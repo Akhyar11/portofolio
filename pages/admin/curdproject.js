@@ -1,14 +1,20 @@
 import CardCurdProject from "../../components/CardCurdProject";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
-export default function curdproject() {
+export default function Curdproject() {
   const [data, setData] = useState(null);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [descripsi, setDesc] = useState("");
   const [ifUpdate, setUpdate] = useState("save");
   const [id, setId] = useState("");
+
+  const getData = async () => {
+    const resolve = await axios.get("http://localhost:5000/api/project");
+    setData(resolve.data);
+  };
 
   const cencelUpdate = () => {
     setUpdate("save");
@@ -46,8 +52,7 @@ export default function curdproject() {
       e.target[0].value = "";
       e.target[1].value = "";
       e.target[2].value = "";
-      const resolve = await axios.get("http://localhost:5000/api/project");
-      setData(resolve.data);
+      getData();
     } catch (e) {
       console.log(e);
     }
@@ -64,8 +69,7 @@ export default function curdproject() {
       e.target[0].value = "";
       e.target[1].value = "";
       e.target[2].value = "";
-      const resolve = await axios.get("http://localhost:5000/api/project");
-      setData(resolve.data);
+      getData();
     } catch (e) {
       console.log(e);
     }
@@ -83,19 +87,17 @@ export default function curdproject() {
         break;
     }
   };
-  useEffect(async () => {
-    const resolve = await axios.get("http://localhost:5000/api/project");
-    setData(resolve.data);
+  useEffect(() => {
+    getData();
   }, []);
   return (
     <div className="p-8 relative text-center max-w-full w-full">
       <div className="hidden md:block absolute left-8 top-8">
-        <a
-          href="/admin/dashboard"
-          className="py-2 px-3 text-lg rounded-md shadow-lg bg-sky-500 hover:bg-sky-60    0 transtition duration-300 text-white"
-        >
-          DASHBOARD
-        </a>
+        <Link href="/admin/dashboard">
+          <a className="py-2 px-3 text-lg rounded-md shadow-lg bg-sky-500 hover:bg-sky-60    0 transtition duration-300 text-white">
+            DASHBOARD
+          </a>
+        </Link>
       </div>
       <div className="w-full text-left flex justify-center">
         <form
@@ -149,12 +151,11 @@ export default function curdproject() {
                 </button>
               ) : null}
             </div>
-            <a
-              href="/admin/dashboard"
-              className="block md:hidden py-2 px-3 text-lg rounded-md shadow-lg bg-sky-500 hover:bg-sky-600 text-white transtition duration-300"
-            >
-              DASHBOARD
-            </a>
+            <Link href="/admin/dashboard">
+              <a className="block md:hidden py-2 px-3 text-lg rounded-md shadow-lg bg-sky-500 hover:bg-sky-600 text-white transtition duration-300">
+                DASHBOARD
+              </a>
+            </Link>
           </div>
         </form>
       </div>
