@@ -27,17 +27,17 @@ export default function Dashboard() {
       </div>
       <h1 className="text-xl font-bold">Dashboard</h1>
       <div className="h-[1px] bg-pink-500 w-full"></div>
-      <div className="flex w-full justify-center pt-8">
+      <div className="flex flex-wrap w-full justify-center pt-8">
         <CardDashboard
-          className="bg-sky-500 mr-4 hover:bg-sky-600"
+          className="bg-sky-500 md:mr-4 hover:bg-sky-600"
           content="CURD Project"
         />
         <CardDashboard
-          className="bg-orange-500 mx-4 hover:bg-orange-600"
+          className="bg-orange-500 md:mx-4 hover:bg-orange-600"
           content="CURD Skil"
         />
         <CardDashboard
-          className="bg-lime-500 ml-4 hover:bg-lime-600"
+          className="bg-lime-500 md:ml-4 hover:bg-lime-600"
           content="Pesan"
         />
       </div>

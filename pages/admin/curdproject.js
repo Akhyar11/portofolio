@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function curdproject() {
-  const [data, setData] = (null);
+  const [data, setData] = useState(null);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [descripsi, setDesc] = useState("");
@@ -132,21 +132,23 @@ export default function curdproject() {
             placeholder="descripsi"
           ></textarea>
           <div className="flex justify-between">
-            <button
-              type="submit"
-              className="py-2 px-3 text-lg rounded-md shadow-lg bg-sky-500 transtition duration-300 hover:bg-sky-600 text-white"
-            >
-              {ifUpdate === "update" ? "UPDATE" : "SAVE"}
-            </button>
-            {ifUpdate === "update" ? (
+            <div>
               <button
-                type="button"
-                className="py-2 px-3 text-lg rounded-md shadow-lg bg-red-500 hover:bg-red-600 transtition duration-300 text-white ml-4"
-                onClick={cencelUpdate}
+                type="submit"
+                className="py-2 px-3 text-lg rounded-md shadow-lg bg-sky-500 transtition duration-300 hover:bg-sky-600 text-white"
               >
-                CENCEL
+                {ifUpdate === "update" ? "UPDATE" : "SAVE"}
               </button>
-            ) : null}
+              {ifUpdate === "update" ? (
+                <button
+                  type="button"
+                  className="py-2 px-3 text-lg rounded-md shadow-lg bg-red-500 hover:bg-red-600 transtition duration-300 text-white ml-4"
+                  onClick={cencelUpdate}
+                >
+                  CENCEL
+                </button>
+              ) : null}
+            </div>
             <a
               href="/admin/dashboard"
               className="block md:hidden py-2 px-3 text-lg rounded-md shadow-lg bg-sky-500 hover:bg-sky-600 text-white transtition duration-300"
@@ -158,7 +160,7 @@ export default function curdproject() {
       </div>
       <div className="h-[1px] w-full mt-6 bg-black"></div>
       <h1 className="text-xl font-bold">Data</h1>
-      <div className="flex justify-center p-4 text-left flex-wrap">
+      <div className="flex justify-center md:p-4 pt-4 text-left flex-wrap">
         {data
           ? data.map((i) => (
               <CardCurdProject

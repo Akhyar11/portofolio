@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { getDatabase, ref, push, set } from "firebase/database";
+import { getDatabase, ref, push, set, remove } from "firebase/database";
 import config from "../env_local.json";
 
 const {
@@ -64,6 +64,12 @@ export const updateProjectApi = async (
     descripsi,
     category,
   });
+  return resolve;
+};
+
+// delete project
+export const deleteProject = async (id) => {
+  const resolve = await remove(ref(database, `projects/${id}`));
   return resolve;
 };
 
