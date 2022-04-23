@@ -6,7 +6,9 @@ import { useEffect, useState } from "react";
 export default function Project() {
   const [data, setData] = useState(null);
   const getData = async () => {
-    const resolve = await axios.get("http://localhost:5000/api/project");
+    const resolve = await axios.get(
+      "https://portofolio-one.vercel.app/api/project"
+    );
     setData(resolve.data);
   };
   useEffect(() => getData(), []);

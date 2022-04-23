@@ -12,7 +12,9 @@ export default function Curdproject() {
   const [id, setId] = useState("");
 
   const getData = async () => {
-    const resolve = await axios.get("http://localhost:5000/api/project");
+    const resolve = await axios.get(
+      "https://portofolio-one.vercel.app/api/project"
+    );
     setData(resolve.data);
   };
 
@@ -43,7 +45,7 @@ export default function Curdproject() {
   const updateProject = async (e) => {
     e.preventDefault();
     try {
-      await axios.put("http://localhost:5000/api/project/update", {
+      await axios.put("https://portofolio-one.vercel.app/api/project/update", {
         title,
         category,
         descripsi,
@@ -61,7 +63,7 @@ export default function Curdproject() {
   const saveProject = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/project/create", {
+      await axios.post("https://portofolio-one.vercel.app/api/project/create", {
         title,
         category,
         descripsi,
