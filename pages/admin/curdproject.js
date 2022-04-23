@@ -1,7 +1,13 @@
 import CardCurdProject from "../../components/CardCurdProject";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { onValue, ref } from "firebase/database";
+import {
+  createProject,
+  db,
+  deleteProjectApi,
+  updateProjectApi,
+} from "../../utils/firebase";
 
 export default function Curdproject() {
   const [data, setData] = useState(null);
@@ -11,11 +17,23 @@ export default function Curdproject() {
   const [ifUpdate, setUpdate] = useState("save");
   const [id, setId] = useState("");
 
-  const getData = async () => {
-    const resolve = await axios.get(
-      "https://portofolio-one.vercel.app/api/project"
-    );
-    setData(resolve.data);
+  const getData = () => {
+    try {
+      const starCountRef = ref(db(), "projects/");
+      onValue(starCountRef, (callback) => {
+        const resolve = callback.val();
+        const data = [];
+        Object.keys(resolve).map((key) => {
+          data.push({
+            id: key,
+            data: resolve[key],
+          });
+        });
+        setData(data);
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const cencelUpdate = () => {
@@ -28,6 +46,19 @@ export default function Curdproject() {
     inputDescripsi.value = null;
   };
 
+  const daleteProject = async () => {
+    try {
+      await deleteProjectApi(id);
+      const inputTitle = document.querySelector("#title");
+      const inputCategory = document.querySelector("#category");
+      const inputDescripsi = document.querySelector("#descripsi");
+      inputTitle.value = null;
+      inputCategory.value = null;
+      inputDescripsi.value = null;
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const getDataFromCard = (id, title, category, descripsi) => {
     setUpdate("update");
     setId(id);
@@ -44,13 +75,9 @@ export default function Curdproject() {
 
   const updateProject = async (e) => {
     e.preventDefault();
+    const date = new Date().getTime();
     try {
-      await axios.put("https://portofolio-one.vercel.app/api/project/update", {
-        title,
-        category,
-        descripsi,
-        id,
-      });
+      await updateProjectApi(title, date, descripsi, id, category);
       e.target[0].value = "";
       e.target[1].value = "";
       e.target[2].value = "";
@@ -62,12 +89,9 @@ export default function Curdproject() {
 
   const saveProject = async (e) => {
     e.preventDefault();
+    const date = new Date().getTime();
     try {
-      await axios.post("https://portofolio-one.vercel.app/api/project/create", {
-        title,
-        category,
-        descripsi,
-      });
+      await createProject(title, descripsi, date, category);
       e.target[0].value = "";
       e.target[1].value = "";
       e.target[2].value = "";
@@ -144,13 +168,22 @@ export default function Curdproject() {
                 {ifUpdate === "update" ? "UPDATE" : "SAVE"}
               </button>
               {ifUpdate === "update" ? (
-                <button
-                  type="button"
-                  className="py-2 px-3 text-lg rounded-md shadow-lg bg-red-500 hover:bg-red-600 transtition duration-300 text-white ml-4"
-                  onClick={cencelUpdate}
-                >
-                  CENCEL
-                </button>
+                <div className="mt-4">
+                  <button
+                    type="button"
+                    className="py-2 px-3 text-lg rounded-md shadow-lg bg-red-500 hover:bg-red-600 transtition duration-300 text-white"
+                    onClick={cencelUpdate}
+                  >
+                    CENCEL
+                  </button>
+                  <button
+                    type="button"
+                    className="py-2 px-3 text-lg rounded-md shadow-lg bg-red-500 hover:bg-red-600 transtition duration-300 text-white ml-4"
+                    onClick={daleteProject}
+                  >
+                    DELETE
+                  </button>
+                </div>
               ) : null}
             </div>
             <Link href="/admin/dashboard">

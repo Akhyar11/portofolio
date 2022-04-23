@@ -68,7 +68,7 @@ export const updateProjectApi = async (
 };
 
 // delete project
-export const deleteProject = async (id) => {
+export const deleteProjectApi = async (id) => {
   const resolve = await remove(ref(database, `projects/${id}`));
   return resolve;
 };
